@@ -37,8 +37,8 @@ var (
 	quit      = make(chan int)
 )
 
-// Games play
-func Games(screen func(width int, height int), monitorKeyboard func()) func() {
+// games play
+func games(screen func(width int, height int), monitorKeyboard func()) func() {
 	return func() {
 
 		//init box
@@ -81,7 +81,7 @@ func flush() {
 	time.Sleep(time.Duration(100-(score/10)) * time.Millisecond)
 }
 
-func InitFood() func(width int, height int) {
+func initFood() func(width int, height int) {
 	return func(width int, height int) {
 		if foodPoint.x == 0 && foodPoint.y == 0 {
 			genFood(width, height)
@@ -90,17 +90,17 @@ func InitFood() func(width int, height int) {
 }
 
 func genFood(width int, height int) {
-	foodPoint.x = GenerateRandInt(1, width-1)
-	foodPoint.y = GenerateRandInt(4, height-1)
+	foodPoint.x = generateRandInt(1, width-1)
+	foodPoint.y = generateRandInt(4, height-1)
 }
 
-//Screen 区域
-func Screen(initSnake func(snakes snake, width int, height int) snake, initFood func(width int, height int), move func(width int, height int)) func(width int, height int) {
+//screen 区域
+func screen(initSnake func(snakes snake, width int, height int) snake, initFood func(width int, height int), move func(width int, height int)) func(width int, height int) {
 	return func(width int, height int) {
 
 		snakes = initSnake(snakes, width, height)
 
-		//init InitFood
+		//init initFood
 		initFood(width, height)
 
 		if !over {
@@ -119,7 +119,7 @@ func render(width int, height int) {
 	var midWidth = width/2 - 8
 
 	//setting the title
-	for _, s := range "Snake Games" {
+	for _, s := range "Snake games" {
 		termbox.SetCell(midWidth, 1, s, termbox.ColorDefault, termbox.ColorDefault)
 		midWidth += runewidth.RuneWidth(s)
 	}
@@ -166,8 +166,8 @@ func render(width int, height int) {
 	termbox.Flush()
 }
 
-//MonitorKeyboard  用户键盘控制
-func MonitorKeyboard() func() {
+//monitorKeyboard  用户键盘控制
+func monitorKeyboard() func() {
 	return func() {
 
 		termbox.SetInputMode(termbox.InputEsc)
@@ -196,8 +196,8 @@ func MonitorKeyboard() func() {
 	}
 }
 
-// InitMove MonitorKeyboard for user keyboard
-func InitMove() func(width int, height int) {
+// initMove monitorKeyboard for user keyboard
+func initMove() func(width int, height int) {
 	return func(width int, height int) {
 		move(width, height)
 	}
@@ -233,8 +233,8 @@ func move(width int, height int) {
 		snakes.len++
 		score++
 
-		foodPoint.x = GenerateRandInt(1, width-1)
-		foodPoint.y = GenerateRandInt(4, height-1)
+		foodPoint.x = generateRandInt(1, width-1)
+		foodPoint.y = generateRandInt(4, height-1)
 	}
 
 	if snakes.len > len(snakes.snakeBody) {
@@ -248,13 +248,13 @@ func head() scope {
 	return snakes.snakeBody[len(snakes.snakeBody)-1]
 }
 
-func GenerateRandInt(min, max int) int {
+func generateRandInt(min, max int) int {
 	rand.Seed(time.Now().Unix())
 	return rand.Intn(max-min) + min
 }
 
-//InitSnake snake
-func InitSnake() func(snakes snake, width int, height int) snake {
+//initSnake snake
+func initSnake() func(snakes snake, width int, height int) snake {
 	return func(snakes snake, width int, height int) snake {
 
 		if len(snakes.snakeBody) == 0 {
