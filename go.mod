@@ -1,4 +1,4 @@
-module snake_game
+module snake
 
 go 1.17
 

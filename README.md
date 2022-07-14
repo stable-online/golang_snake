@@ -4,10 +4,10 @@ Golang version snake game ^_^
 
 ## Demonstration 
 
-<img src="https://img-blog.csdnimg.cn/ca55d29335fc4d26aa494de74ba9f89e.gif#pic_center" width="80%" height="80%">
+<img src="https://img-blog.csdnimg.cn/e5af6c6215424574882b81e865d7787b.gif" width="80%" height="80%">
 
 ## Operation 
-`keyboard: ↑ ↓ ← → esc`
+`keyboard: ↑:up, ↓:down, ←:left, →:right,esc:closing page`
 
 ## Run
 `go run main.go`
