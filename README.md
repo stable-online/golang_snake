@@ -3,7 +3,7 @@
 Golang version snake game ^_^
 
 ## Demonstration 
-![img](player.gif)
+![img](https://img-blog.csdnimg.cn/ca55d29335fc4d26aa494de74ba9f89e.gif#pic_center)
 
 ## Operation 
 `keyboard: ↑ ↓ ← → esc`
