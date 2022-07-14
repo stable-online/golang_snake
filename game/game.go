@@ -37,15 +37,6 @@ var (
 	quit      = make(chan int)
 )
 
-/*func main() {
-
-	//to create the game starter
-	GameStarter := Games(Screen(InitSnake(), InitFood(), InitMove()), MonitorKeyboard())
-
-	//starting
-	GameStarter()
-}*/
-
 // Games play
 func Games(screen func(width int, height int), monitorKeyboard func()) func() {
 	return func() {
