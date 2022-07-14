@@ -1,5 +1,6 @@
 package game
 
+//struct
 type game struct {
 	games func()
 }

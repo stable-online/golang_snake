@@ -53,8 +53,8 @@ func games(screen func(width int, height int), monitorKeyboard func()) func() {
 		go monitorKeyboard()
 
 		for {
-			select {
 
+			select {
 			case operator := <-keyboard:
 				switch operator {
 				case operator:
@@ -68,9 +68,7 @@ func games(screen func(width int, height int), monitorKeyboard func()) func() {
 			default:
 
 				width, height := termbox.Size()
-
 				screen(width-1, height-1)
-
 				flush()
 			}
 		}
@@ -94,7 +92,7 @@ func genFood(width int, height int) {
 	foodPoint.y = generateRandInt(4, height-1)
 }
 
-//screen 区域
+//screen
 func screen(initSnake func(snakes snake, width int, height int) snake, initFood func(width int, height int), move func(width int, height int)) func(width int, height int) {
 	return func(width int, height int) {
 
@@ -244,6 +242,7 @@ func move(width int, height int) {
 	}
 }
 
+//head
 func head() scope {
 	return snakes.snakeBody[len(snakes.snakeBody)-1]
 }
