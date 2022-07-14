@@ -1,4 +1,4 @@
-module snake_to_func
+module snake_game
 
 go 1.17
 
