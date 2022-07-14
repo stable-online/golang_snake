@@ -167,11 +167,11 @@ func render(width int, height int) {
 
 	//setting snake
 	for _, body := range snakes.snakeBody {
-		termbox.SetCell(body.x, body.y, '0', termbox.ColorRed, termbox.ColorDefault)
+		termbox.SetCell(body.x, body.y, 'o', termbox.ColorLightGreen, termbox.ColorDefault)
 	}
 
 	//setting food
-	termbox.SetCell(foodPoint.x, foodPoint.y, 'o', termbox.ColorRed, termbox.ColorDefault)
+	termbox.SetCell(foodPoint.x, foodPoint.y, '0', termbox.ColorLightRed, termbox.ColorDefault)
 	termbox.Flush()
 }
 
