@@ -6,7 +6,7 @@ import "fmt"
 func catch() {
 	if err := recover(); err != nil {
 		//记录日志等操作
-		fmt.Println(fmt.Sprintf("record error info:%s", err))
+		fmt.Println(fmt.Sprintf("Catch faild:%s", err))
 	}
 }
 
