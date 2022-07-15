@@ -8,6 +8,7 @@ Golang version snake game ^_^
 
 ## Operation 
 `keyboard: ↑:up, ↓:down, ←:left, →:right,esc:closing page`
+`键盘: ↑:蛇向上, ↓:蛇向下, ←:蛇向左, →:蛇向右,esc:关闭当前页面`
 
 ## Run
 `go run main.go`
