@@ -53,11 +53,19 @@ func InitGames() GamesType {
 			default:
 				if !gameOver {
 					width, height := termbox.Size()
+					verifyHeight(height)
 					screen(width-1, height-1, runtimeChan)
 				}
 				flushScreen()
 			}
 		}
+	}
+}
+
+//verifyHeight 验证高度
+func verifyHeight(height int) {
+	if height < 19 {
+		panic("The size is too small, please enlarge the border (边框高度太小,请拉大边框高度)")
 	}
 }
 
