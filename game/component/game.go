@@ -15,11 +15,11 @@ const (
 )
 
 // GamesType defined method
-type GamesType func(screen ScreenType, monitorKeyboard MonitorKeyType)
+type GamesType func(screen ScreenFunType, monitorKeyboard MonitorFunType)
 
 // InitGames 游戏初始化高阶函数
 func InitGames() GamesType {
-	return func(screen ScreenType, monitorKeyboard MonitorKeyType) {
+	return func(screen ScreenFunType, monitor MonitorFunType) {
 
 		//keyboardChan channel
 		var (
@@ -38,7 +38,7 @@ func InitGames() GamesType {
 		defer termbox.Close()
 
 		//monitor keyboardChan
-		go monitorKeyboard(keyboardChan, quitChan)
+		go monitor(keyboardChan, quitChan)
 
 		for {
 			select {

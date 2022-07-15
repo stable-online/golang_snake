@@ -8,17 +8,17 @@ import (
 	"time"
 )
 
-//ScreenType 启动屏幕展示
-type ScreenType func(int, int, chan bool)
+//ScreenFunType 启动屏幕展示
+type ScreenFunType func(int, int, chan bool)
 
-//snakeType
-type snakeType func(int, int)
+//snakeFunType
+type snakeFunType func(int, int)
 
-//foodType
-type foodType func(int, int)
+//foodFunType
+type foodFunType func(int, int)
 
-//moveType
-type moveType func(int, int, chan bool)
+//moveFunType
+type moveFunType func(int, int, chan bool)
 
 //scope
 type scope struct {
@@ -55,7 +55,7 @@ func genFood(width int, height int) {
 }
 
 //screen
-func screen(initSnake snakeType, initFood foodType, move moveType) ScreenType {
+func screen(initSnake snakeFunType, initFood foodFunType, move moveFunType) ScreenFunType {
 	return func(width int, height int, runtimeChan chan bool) {
 
 		//init snakes
@@ -127,7 +127,7 @@ func render(width int, height int) {
 }
 
 // initMove InitMonitor for user keyboard
-func initMove() moveType {
+func initMove() moveFunType {
 	return func(width int, height int, runtimeChan chan bool) {
 		move(width, height, runtimeChan)
 	}
@@ -187,7 +187,7 @@ func generateRandInt(min, max int) int {
 }
 
 //initSnake snake
-func initSnake() snakeType {
+func initSnake() snakeFunType {
 	return func(width int, height int) {
 
 		if len(snakes.snakeBody) == 0 {
@@ -201,6 +201,6 @@ func initSnake() snakeType {
 }
 
 //InitScreen 初始化屏幕信息
-func InitScreen() ScreenType {
+func InitScreen() ScreenFunType {
 	return screen(initSnake(), initFood(), initMove())
 }

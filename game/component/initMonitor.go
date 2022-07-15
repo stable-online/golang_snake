@@ -4,10 +4,10 @@ import (
 	"github.com/nsf/termbox-go"
 )
 
-type MonitorKeyType func(chan int, chan int)
+type MonitorFunType func(chan int, chan int)
 
 //InitMonitor 初始化监控信息
-func InitMonitor() MonitorKeyType {
+func InitMonitor() MonitorFunType {
 	return func(keyboard chan int, quit chan int) {
 
 		termbox.SetInputMode(termbox.InputEsc)

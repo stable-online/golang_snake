@@ -5,8 +5,8 @@ import "snake/game/component"
 //service
 type service struct {
 	games   component.GamesType      //游戏主控
-	screen  component.ScreenType     //屏幕刷新
-	monitor component.MonitorKeyType //键盘控制
+	screen  component.ScreenFunType  //屏幕刷新
+	monitor component.MonitorFunType //键盘控制
 }
 
 //start
