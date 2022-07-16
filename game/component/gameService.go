@@ -34,7 +34,7 @@ func (g *GameService) Start() {
 		default:
 			if !g.data.gameOver {
 				width, height := termbox.Size()
-				if err := g.screenApp.Start(width-1, height-1, g.data.runtimeChan, &g.data.score, g.data.direction); err != nil {
+				if err := g.screenApp.Start(width-1, height-1, g.data); err != nil {
 					panic(err.Error())
 				}
 			}
