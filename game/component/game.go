@@ -14,6 +14,19 @@ const (
 	QUIT
 )
 
+//scope
+type scope struct {
+	x int
+	y int
+}
+
+//snake
+type snake struct {
+	snakeBody []scope
+	direction int
+	len       int
+}
+
 // GamesType defined method
 type GamesType func(screen ScreenFunType, monitorKeyboard MonitorFunType)
 
@@ -27,6 +40,7 @@ func InitGames() GamesType {
 			quitChan     = make(chan int)
 			runtimeChan  = make(chan bool, 1)
 			gameOver     = false
+			snakes       snake
 		)
 
 		//init box
@@ -53,8 +67,7 @@ func InitGames() GamesType {
 			default:
 				if !gameOver {
 					width, height := termbox.Size()
-					//check
-					if err := screen(width-1, height-1, runtimeChan); err != nil {
+					if err := screen(width-1, height-1, runtimeChan, &snakes); err != nil {
 						panic(err.Error())
 					}
 				}

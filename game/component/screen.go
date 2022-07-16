@@ -10,34 +10,20 @@ import (
 )
 
 //ScreenFunType 启动屏幕展示
-type ScreenFunType func(int, int, chan bool) error
+type ScreenFunType func(int, int, chan bool, *snake) error
 
 //snakeFunType
-type snakeFunType func(int, int)
+type snakeFunType func(int, int, *snake)
 
 //foodFunType
 type foodFunType func(int, int)
 
 //moveFunType
-type moveFunType func(int, int, chan bool)
-
-//scope
-type scope struct {
-	x int
-	y int
-}
-
-//snake
-type snake struct {
-	snakeBody []scope
-	direction int
-	len       int
-}
+type moveFunType func(int, int, chan bool, *snake)
 
 var (
 	score     = 0
 	foodPoint scope
-	snakes    snake
 )
 
 //initFood
@@ -57,26 +43,26 @@ func genFood(width int, height int) {
 
 //screen
 func screen(initSnake snakeFunType, initFood foodFunType, move moveFunType) ScreenFunType {
-	return func(width int, height int, runtimeChan chan bool) error {
+	return func(width int, height int, runtimeChan chan bool, snakes *snake) error {
 
 		//init
 		verifyHeight(height)
 
 		//init snakes
-		initSnake(width, height)
+		initSnake(width, height, snakes)
 
 		//init initFood
 		initFood(width, height)
 
 		//init move
-		move(width, height, runtimeChan)
+		move(width, height, runtimeChan, snakes)
 
-		return render(width, height)
+		return render(width, height, snakes)
 	}
 }
 
 //render
-func render(width int, height int) error {
+func render(width int, height int, snakes *snake) error {
 
 	if err := termbox.Clear(termbox.ColorDefault, termbox.ColorBlack); err != nil {
 		return errors.New(err.Error())
@@ -136,22 +122,22 @@ func render(width int, height int) error {
 
 // initMove InitMonitor for user keyboard
 func initMove() moveFunType {
-	return func(width int, height int, runtimeChan chan bool) {
-		move(width, height, runtimeChan)
+	return func(width int, height int, runtimeChan chan bool, snakes *snake) {
+		move(width, height, runtimeChan, snakes)
 	}
 }
 
 //isDeath
-func isDeath(width int, height int) bool {
+func isDeath(width int, height int, snakes *snake) bool {
 
-	s := head()
+	s := head(snakes)
 
 	return s.x >= width || s.y >= height || s.x <= 0 || s.y <= 3
 }
 
 //move
-func move(width int, height int, runtimeChan chan bool) {
-	scopes := head()
+func move(width int, height int, runtimeChan chan bool, snakes *snake) {
+	scopes := head(snakes)
 
 	switch snakes.direction {
 	case RIGHT:
@@ -164,7 +150,7 @@ func move(width int, height int, runtimeChan chan bool) {
 		scopes.y++
 	}
 
-	if isDeath(width, height) {
+	if isDeath(width, height, snakes) {
 		runtimeChan <- true
 		return
 	}
@@ -184,7 +170,7 @@ func move(width int, height int, runtimeChan chan bool) {
 }
 
 //head
-func head() scope {
+func head(snakes *snake) scope {
 	return snakes.snakeBody[len(snakes.snakeBody)-1]
 }
 
@@ -203,7 +189,7 @@ func verifyHeight(height int) {
 
 //initSnake snake
 func initSnake() snakeFunType {
-	return func(width int, height int) {
+	return func(width int, height int, snakes *snake) {
 
 		if len(snakes.snakeBody) == 0 {
 			snakes.snakeBody = append(snakes.snakeBody, scope{5, height - 2})
