@@ -21,3 +21,8 @@ type snake struct {
 	direction int
 	len       int
 }
+
+type GameService struct {
+	screenApp  *ScreenProvider
+	monitorApp *MonitorProvider
+}

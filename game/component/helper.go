@@ -1,13 +1,14 @@
-package game
+package component
 
 import (
 	"bytes"
 	"fmt"
 	"runtime"
+	"time"
 )
 
-//全局捕获
-func catch() {
+// Catch 全局捕获
+func Catch() {
 	if err := recover(); err != nil {
 
 		//打印异常
@@ -27,8 +28,13 @@ func catch() {
 	}
 }
 
-//执行方法
-func run(f func()) {
-	defer catch()
+// Run 执行方法
+func Run(f func()) {
+	defer Catch()
 	f()
+}
+
+//Flush 刷新
+func Flush(score int) {
+	time.Sleep(time.Duration(100-(score/10)) * time.Millisecond)
 }

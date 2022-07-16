@@ -1,8 +1,8 @@
 package game
 
-import "snake/game/component"
+import . "snake/game/component"
 
 //Start starting snake program
 func Start() {
-	run(func() { component.NewGameService().Start() })
+	Run(func() { NewGameService().Start() })
 }
