@@ -12,7 +12,6 @@ func (g *GameService) Start() {
 
 	//keyboardChan channel
 	var (
-		quitChan    = make(chan int)
 		runtimeChan = make(chan bool, 1)
 		gameOver    = false
 		snakes      snake
@@ -29,7 +28,7 @@ func (g *GameService) Start() {
 	defer termbox.Close()
 
 	//monitor keyboardChan
-	go g.monitorApp.Start(quitChan, g.data)
+	go g.monitorApp.Start(g.data)
 
 	for {
 		select {
@@ -37,7 +36,7 @@ func (g *GameService) Start() {
 			if operator != 0 {
 				snakes.direction = operator
 			}
-		case <-quitChan:
+		case <-g.data.quitChan:
 			return
 		case msg := <-runtimeChan:
 			gameOver = msg

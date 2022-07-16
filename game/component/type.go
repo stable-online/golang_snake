@@ -25,6 +25,7 @@ type snake struct {
 //GameData game 数据
 type GameData struct {
 	keyboardChan chan int
+	quitChan     chan int
 }
 
 //GameService  game 服务

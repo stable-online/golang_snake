@@ -8,6 +8,6 @@ func NewMonitorApp() *MonitorProvider {
 	return &MonitorProvider{Monitor: InitMonitor()}
 }
 
-func (s *MonitorProvider) Start(quitChan chan int, GameData *GameData) {
-	s.Monitor(GameData.keyboardChan, quitChan)
+func (s *MonitorProvider) Start(GameData *GameData) {
+	s.Monitor(GameData.keyboardChan, GameData.quitChan)
 }
