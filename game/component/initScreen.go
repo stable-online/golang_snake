@@ -196,7 +196,7 @@ func initSnake() snakeFunType {
 	}
 }
 
-//InitScreen 初始化屏幕信息
+//InitScreen 初始化屏幕
 func InitScreen() ScreenFunType {
 	return screen(initSnake(), initFood(), initMove())
 }

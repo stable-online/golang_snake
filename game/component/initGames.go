@@ -6,11 +6,11 @@ import (
 )
 
 // GamesType defined method
-type GamesType func(screen ScreenFunType, monitorKeyboard MonitorFunType)
+type GamesType func()
 
-// InitGames 游戏初始化高阶函数
-func InitGames() GamesType {
-	return func(screen ScreenFunType, monitor MonitorFunType) {
+// InitGames 游戏初始化
+func InitGames(screen ScreenFunType, monitor MonitorFunType) GamesType {
+	return func() {
 
 		//keyboardChan channel
 		var (

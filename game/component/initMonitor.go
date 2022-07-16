@@ -6,7 +6,7 @@ import (
 
 type MonitorFunType func(chan int, chan int)
 
-//InitMonitor 初始化监控信息
+//InitMonitor 初始化监控
 func InitMonitor() MonitorFunType {
 	return func(monitorChan chan int, quit chan int) {
 
