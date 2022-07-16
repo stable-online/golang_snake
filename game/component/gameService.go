@@ -27,6 +27,11 @@ func (g *GameService) Start() {
 	//monitor keyboardChan
 	go g.monitorApp.Start(g.data)
 
+	//run job
+	g.working()
+}
+
+func (g *GameService) working() {
 	for {
 		select {
 		case operator := <-g.data.keyboardChan:
