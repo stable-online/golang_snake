@@ -22,7 +22,14 @@ type snake struct {
 	len       int
 }
 
+//GameData game 数据
+type GameData struct {
+	keyboardChan chan int
+}
+
+//GameService  game 服务
 type GameService struct {
 	screenApp  *ScreenProvider
 	monitorApp *MonitorProvider
+	data       *GameData
 }

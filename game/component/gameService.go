@@ -5,20 +5,19 @@ import (
 )
 
 func NewGameService() *GameService {
-	return &GameService{screenApp: NewScreenApp(), monitorApp: NewMonitorApp()}
+	return &GameService{screenApp: NewScreenApp(), monitorApp: NewMonitorApp(), data: NewGameData()}
 }
 
 func (g *GameService) Start() {
 
 	//keyboardChan channel
 	var (
-		keyboardChan = make(chan int)
-		quitChan     = make(chan int)
-		runtimeChan  = make(chan bool, 1)
-		gameOver     = false
-		snakes       snake
-		score        = 0
-		foodPoint    scope
+		quitChan    = make(chan int)
+		runtimeChan = make(chan bool, 1)
+		gameOver    = false
+		snakes      snake
+		score       = 0
+		foodPoint   scope
 	)
 
 	//init box
@@ -30,11 +29,11 @@ func (g *GameService) Start() {
 	defer termbox.Close()
 
 	//monitor keyboardChan
-	go g.monitorApp.Start(keyboardChan, quitChan)
+	go g.monitorApp.Start(quitChan, g.data)
 
 	for {
 		select {
-		case operator := <-keyboardChan:
+		case operator := <-g.data.keyboardChan:
 			if operator != 0 {
 				snakes.direction = operator
 			}
