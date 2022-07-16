@@ -1,7 +1,9 @@
 package game
 
 import (
+	"bytes"
 	"fmt"
+	"runtime"
 )
 
 //全局捕获
@@ -12,7 +14,7 @@ func catch() {
 		fmt.Println(fmt.Sprintf("Catch faild:%s", err))
 
 		//获取堆栈信息(暂时先不获取吧.)
-		/*buf := new(bytes.Buffer)
+		buf := new(bytes.Buffer)
 		fmt.Fprintf(buf, "%v\n", err)
 		for i := 1; ; i++ {
 			pc, file, line, ok := runtime.Caller(i)
@@ -21,7 +23,7 @@ func catch() {
 			}
 			fmt.Fprintf(buf, "%s:%d (0x%x)\n", file, line, pc)
 		}
-		fmt.Println(buf.String())*/
+		fmt.Println(buf.String())
 	}
 }
 

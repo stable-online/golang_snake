@@ -40,7 +40,7 @@ func genFood(width int, height int, foodPoint *scope) {
 func screen(initSnake snakeFunType, initFood foodFunType, move moveFunType) ScreenFunType {
 	return func(width int, height int, runtimeChan chan bool, snakes *snake, score *int, foodPoint *scope) error {
 
-		//init
+		//verify
 		verifyHeight(height)
 
 		//init snakes
