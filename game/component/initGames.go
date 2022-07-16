@@ -6,11 +6,11 @@ import (
 )
 
 // GamesType defined method
-type GamesType func()
+type GamesType func(g *GameService)
 
 // InitGames 游戏初始化
-func InitGames(screenApp *ScreenApp, monitorApp *MonitorApp) GamesType {
-	return func() {
+func InitGames(screenApp *ScreenProvider, monitorApp *MonitorProvider) GamesType {
+	return func(g *GameService) {
 
 		//keyboardChan channel
 		var (
