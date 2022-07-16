@@ -12,11 +12,10 @@ func (g *GameService) Start() {
 
 	//keyboardChan channel
 	var (
-		runtimeChan = make(chan bool, 1)
-		gameOver    = false
-		snakes      snake
-		score       = 0
-		foodPoint   scope
+		gameOver  = false
+		snakes    snake
+		score     = 0
+		foodPoint scope
 	)
 
 	//init box
@@ -38,12 +37,12 @@ func (g *GameService) Start() {
 			}
 		case <-g.data.quitChan:
 			return
-		case msg := <-runtimeChan:
+		case msg := <-g.data.runtimeChan:
 			gameOver = msg
 		default:
 			if !gameOver {
 				width, height := termbox.Size()
-				if err := g.screenApp.Start(width-1, height-1, runtimeChan, &snakes, &score, &foodPoint); err != nil {
+				if err := g.screenApp.Start(width-1, height-1, g.data.runtimeChan, &snakes, &score, &foodPoint); err != nil {
 					panic(err.Error())
 				}
 			}
