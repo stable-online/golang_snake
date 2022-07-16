@@ -37,5 +37,4 @@ type GameService struct {
 	screenApp  *ScreenProvider
 	monitorApp *MonitorProvider
 	data       *GameData
-	score      int
 }

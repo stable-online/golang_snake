@@ -5,7 +5,7 @@ import (
 )
 
 func NewGameService() *GameService {
-	return &GameService{screenApp: NewScreenApp(), monitorApp: NewMonitorApp(), data: NewGameData(), score: 0}
+	return &GameService{screenApp: NewScreenApp(), monitorApp: NewMonitorApp(), data: NewGameData()}
 }
 
 func (g *GameService) Start() {

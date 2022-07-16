@@ -1,5 +1,5 @@
 package component
 
 func NewGameData() *GameData {
-	return &GameData{keyboardChan: make(chan int), quitChan: make(chan int), runtimeChan: make(chan bool, 1), gameOver: false, direction: UP}
+	return &GameData{keyboardChan: make(chan int), quitChan: make(chan int), runtimeChan: make(chan bool, 1), gameOver: false, score: 0, direction: UP}
 }
