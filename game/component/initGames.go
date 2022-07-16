@@ -9,7 +9,7 @@ import (
 type GamesType func()
 
 // InitGames 游戏初始化
-func InitGames(screen ScreenFunType, monitor MonitorFunType) GamesType {
+func InitGames(screenApp *ScreenApp, monitorApp *MonitorApp) GamesType {
 	return func() {
 
 		//keyboardChan channel
@@ -32,7 +32,7 @@ func InitGames(screen ScreenFunType, monitor MonitorFunType) GamesType {
 		defer termbox.Close()
 
 		//monitor keyboardChan
-		go monitor(keyboardChan, quitChan)
+		go monitorApp.Start(keyboardChan, quitChan)
 
 		for {
 			select {
@@ -47,7 +47,7 @@ func InitGames(screen ScreenFunType, monitor MonitorFunType) GamesType {
 			default:
 				if !gameOver {
 					width, height := termbox.Size()
-					if err := screen(width-1, height-1, runtimeChan, &snakes, &score, &foodPoint); err != nil {
+					if err := screenApp.Start(width-1, height-1, runtimeChan, &snakes, &score, &foodPoint); err != nil {
 						panic(err.Error())
 					}
 				}
