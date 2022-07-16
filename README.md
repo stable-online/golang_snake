@@ -16,6 +16,6 @@ Golang version snake game ^_^
 
 Or  
 
-`1. go build -o compiler/mac_snake main.go`
+`1. go build -o compiler/snake main.go`
 
-`2. ./compiler/mac_snake`
+`2. ./compiler/snake`
