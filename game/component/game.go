@@ -27,10 +27,6 @@ type snake struct {
 	len       int
 }
 
-var (
-	foodPoint scope
-)
-
 // GamesType defined method
 type GamesType func(screen ScreenFunType, monitorKeyboard MonitorFunType)
 
@@ -46,6 +42,7 @@ func InitGames() GamesType {
 			gameOver     = false
 			snakes       snake
 			score        = 0
+			foodPoint    scope
 		)
 
 		//init box
@@ -72,7 +69,7 @@ func InitGames() GamesType {
 			default:
 				if !gameOver {
 					width, height := termbox.Size()
-					if err := screen(width-1, height-1, runtimeChan, &snakes, &score); err != nil {
+					if err := screen(width-1, height-1, runtimeChan, &snakes, &score, &foodPoint); err != nil {
 						panic(err.Error())
 					}
 				}

@@ -10,35 +10,35 @@ import (
 )
 
 //ScreenFunType 启动屏幕展示
-type ScreenFunType func(int, int, chan bool, *snake, *int) error
+type ScreenFunType func(int, int, chan bool, *snake, *int, *scope) error
 
 //snakeFunType
 type snakeFunType func(int, int, *snake)
 
 //foodFunType
-type foodFunType func(int, int)
+type foodFunType func(int, int, *scope)
 
 //moveFunType
-type moveFunType func(int, int, chan bool, *snake, *int)
+type moveFunType func(int, int, chan bool, *snake, *int, *scope)
 
 //initFood
-func initFood() func(width int, height int) {
-	return func(width int, height int) {
+func initFood() func(width int, height int, foodPoint *scope) {
+	return func(width int, height int, foodPoint *scope) {
 		if foodPoint.x == 0 && foodPoint.y == 0 {
-			genFood(width, height)
+			genFood(width, height, foodPoint)
 		}
 	}
 }
 
 //genFood
-func genFood(width int, height int) {
+func genFood(width int, height int, foodPoint *scope) {
 	foodPoint.x = generateRandInt(1, width-1)
 	foodPoint.y = generateRandInt(4, height-1)
 }
 
 //screen
 func screen(initSnake snakeFunType, initFood foodFunType, move moveFunType) ScreenFunType {
-	return func(width int, height int, runtimeChan chan bool, snakes *snake, score *int) error {
+	return func(width int, height int, runtimeChan chan bool, snakes *snake, score *int, foodPoint *scope) error {
 
 		//init
 		verifyHeight(height)
@@ -47,17 +47,17 @@ func screen(initSnake snakeFunType, initFood foodFunType, move moveFunType) Scre
 		initSnake(width, height, snakes)
 
 		//init initFood
-		initFood(width, height)
+		initFood(width, height, foodPoint)
 
 		//init move
-		move(width, height, runtimeChan, snakes, score)
+		move(width, height, runtimeChan, snakes, score, foodPoint)
 
-		return render(width, height, snakes, score)
+		return render(width, height, snakes, score, foodPoint)
 	}
 }
 
 //render
-func render(width int, height int, snakes *snake, score *int) error {
+func render(width int, height int, snakes *snake, score *int, foodPoint *scope) error {
 
 	if err := termbox.Clear(termbox.ColorDefault, termbox.ColorBlack); err != nil {
 		return errors.New(err.Error())
@@ -117,8 +117,8 @@ func render(width int, height int, snakes *snake, score *int) error {
 
 // initMove InitMonitor for user keyboard
 func initMove() moveFunType {
-	return func(width int, height int, runtimeChan chan bool, snakes *snake, score *int) {
-		move(width, height, runtimeChan, snakes, score)
+	return func(width int, height int, runtimeChan chan bool, snakes *snake, score *int, foodPoint *scope) {
+		move(width, height, runtimeChan, snakes, score, foodPoint)
 	}
 }
 
@@ -131,7 +131,7 @@ func isDeath(width int, height int, snakes *snake) bool {
 }
 
 //move
-func move(width int, height int, runtimeChan chan bool, snakes *snake, score *int) {
+func move(width int, height int, runtimeChan chan bool, snakes *snake, score *int, foodPoint *scope) {
 	scopes := head(snakes)
 
 	switch snakes.direction {
@@ -154,7 +154,7 @@ func move(width int, height int, runtimeChan chan bool, snakes *snake, score *in
 		snakes.len++
 		*score++
 
-		genFood(width, height)
+		genFood(width, height, foodPoint)
 	}
 
 	if snakes.len > len(snakes.snakeBody) {
