@@ -115,7 +115,7 @@ func render(width int, height int, snakes *snake, score *int, foodPoint *scope) 
 	return termbox.Flush()
 }
 
-// initMove InitMonitor for user keyboard
+// initMove initMonitor for user keyboard
 func initMove() moveFunType {
 	return func(width int, height int, runtimeChan chan bool, snakes *snake, score *int, foodPoint *scope) {
 		move(width, height, runtimeChan, snakes, score, foodPoint)
@@ -196,7 +196,7 @@ func initSnake() snakeFunType {
 	}
 }
 
-//InitScreen 初始化屏幕
-func InitScreen() ScreenFunType {
+//initScreen 初始化屏幕
+func initScreen() ScreenFunType {
 	return screen(initSnake(), initFood(), initMove())
 }

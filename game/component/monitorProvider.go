@@ -1,11 +1,11 @@
 package component
 
 type MonitorProvider struct {
-	Monitor MonitorFunType
+	Monitor monitorFunType
 }
 
 func NewMonitorApp() *MonitorProvider {
-	return &MonitorProvider{Monitor: InitMonitor()}
+	return &MonitorProvider{Monitor: initMonitor()}
 }
 
 func (s *MonitorProvider) Start(GameData *GameData) {

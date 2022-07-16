@@ -12,7 +12,7 @@ type GameService struct {
 }
 
 func NewGameService() *GameService {
-	return &GameService{screenApp: NewScreenApp(), monitorApp: NewMonitorApp(), data: NewGameData()}
+	return &GameService{screenApp: NewScreenApp(), monitorApp: NewMonitorApp(), data: newGameData()}
 }
 
 func (g *GameService) Start() {

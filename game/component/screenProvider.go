@@ -7,7 +7,7 @@ type ScreenProvider struct {
 }
 
 func NewScreenApp() *ScreenProvider {
-	return &ScreenProvider{Screen: InitScreen(), snakes: new(snake), foodPoint: new(scope)}
+	return &ScreenProvider{Screen: initScreen(), snakes: new(snake), foodPoint: new(scope)}
 }
 
 func (s *ScreenProvider) Start(width int, height int, data *GameData) error {
