@@ -31,3 +31,9 @@ type gameData struct {
 	score        int
 	direction    int
 }
+
+//screenData 屏幕相关参数
+type screenData struct {
+	snakes    *snake
+	foodPoint *scope
+}

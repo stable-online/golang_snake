@@ -36,5 +36,5 @@ func Run(f func()) {
 
 //Flush 刷新
 func Flush(score int) {
-	time.Sleep(time.Duration(100-(score/10)) * time.Millisecond)
+	time.Sleep(time.Duration(150-(score/10)) * time.Millisecond)
 }
