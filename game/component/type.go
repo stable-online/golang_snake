@@ -31,10 +31,3 @@ type GameData struct {
 	score        int
 	direction    int
 }
-
-//GameService  game 服务
-type GameService struct {
-	screenApp  *ScreenProvider
-	monitorApp *MonitorProvider
-	data       *GameData
-}

@@ -4,13 +4,19 @@ import (
 	"github.com/nsf/termbox-go"
 )
 
+//GameService  game 服务
+type GameService struct {
+	screenApp  *ScreenProvider
+	monitorApp *MonitorProvider
+	data       *GameData
+}
+
 func NewGameService() *GameService {
 	return &GameService{screenApp: NewScreenApp(), monitorApp: NewMonitorApp(), data: NewGameData()}
 }
 
 func (g *GameService) Start() {
 
-	//init box
 	if initErr := termbox.Init(); initErr != nil {
 		panic(initErr)
 	}
