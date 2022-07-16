@@ -5,14 +5,13 @@ import (
 )
 
 func NewGameService() *GameService {
-	return &GameService{screenApp: NewScreenApp(), monitorApp: NewMonitorApp(), data: NewGameData()}
+	return &GameService{screenApp: NewScreenApp(), monitorApp: NewMonitorApp(), data: NewGameData(), score: 0}
 }
 
 func (g *GameService) Start() {
 
 	//keyboardChan channel
 	var (
-		score     = 0
 		foodPoint scope
 		direction = UP
 	)
@@ -41,11 +40,11 @@ func (g *GameService) Start() {
 		default:
 			if !g.data.gameOver {
 				width, height := termbox.Size()
-				if err := g.screenApp.Start(width-1, height-1, g.data.runtimeChan, &score, &foodPoint, direction); err != nil {
+				if err := g.screenApp.Start(width-1, height-1, g.data.runtimeChan, &g.data.score, &foodPoint, direction); err != nil {
 					panic(err.Error())
 				}
 			}
-			g.flush(&score)
+			g.flush(&g.data.score)
 		}
 	}
 }

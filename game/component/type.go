@@ -28,6 +28,7 @@ type GameData struct {
 	quitChan     chan int
 	runtimeChan  chan bool
 	gameOver     bool
+	score        int
 }
 
 //GameService  game 服务
@@ -35,4 +36,5 @@ type GameService struct {
 	screenApp  *ScreenProvider
 	monitorApp *MonitorProvider
 	data       *GameData
+	score      int
 }
