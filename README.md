@@ -12,4 +12,10 @@ Golang version snake game ^_^
 `键盘: ↑:蛇向上, ↓:蛇向下, ←:蛇向左, →:蛇向右,esc:关闭当前页面`
 
 ## Run
-`go run main.go`
+`go run main.go`  
+
+Or  
+
+`1. go build -o compiler/mac_snake main.go`
+
+`2. ./compiler/mac_snake`
