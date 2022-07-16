@@ -10,10 +10,10 @@ import (
 )
 
 //ScreenFunType 启动屏幕展示
-type ScreenFunType func(int, int, chan bool, *snake, *int, *scope) error
+type ScreenFunType func(int, int, chan bool, *snake, *int, *scope, int) error
 
 //snakeFunType
-type snakeFunType func(int, int, *snake)
+type snakeFunType func(int, int, *snake, int)
 
 //foodFunType
 type foodFunType func(int, int, *scope)
@@ -38,13 +38,13 @@ func genFood(width int, height int, foodPoint *scope) {
 
 //screen
 func screen(initSnake snakeFunType, initFood foodFunType, move moveFunType) ScreenFunType {
-	return func(width int, height int, runtimeChan chan bool, snakes *snake, score *int, foodPoint *scope) error {
+	return func(width int, height int, runtimeChan chan bool, snakes *snake, score *int, foodPoint *scope, direction int) error {
 
 		//verify
 		verifyHeight(height)
 
 		//init snakes
-		initSnake(width, height, snakes)
+		initSnake(width, height, snakes, direction)
 
 		//init initFood
 		initFood(width, height, foodPoint)
@@ -184,15 +184,15 @@ func verifyHeight(height int) {
 
 //initSnake snake
 func initSnake() snakeFunType {
-	return func(width int, height int, snakes *snake) {
+	return func(width int, height int, snakes *snake, direction int) {
 
 		if len(snakes.snakeBody) == 0 {
 			snakes.snakeBody = append(snakes.snakeBody, scope{5, height - 2})
 			snakes.snakeBody = append(snakes.snakeBody, scope{5, height - 3})
 
-			snakes.direction = UP
 			snakes.len = 2
 		}
+		snakes.direction = direction
 	}
 }
 

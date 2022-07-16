@@ -12,10 +12,9 @@ func (g *GameService) Start() {
 
 	//keyboardChan channel
 	var (
-		gameOver  = false
-		snakes    snake
 		score     = 0
 		foodPoint scope
+		direction = UP
 	)
 
 	//init box
@@ -33,16 +32,16 @@ func (g *GameService) Start() {
 		select {
 		case operator := <-g.data.keyboardChan:
 			if operator != 0 {
-				snakes.direction = operator
+				direction = operator
 			}
 		case <-g.data.quitChan:
 			return
 		case msg := <-g.data.runtimeChan:
-			gameOver = msg
+			g.data.gameOver = msg
 		default:
-			if !gameOver {
+			if !g.data.gameOver {
 				width, height := termbox.Size()
-				if err := g.screenApp.Start(width-1, height-1, g.data.runtimeChan, &snakes, &score, &foodPoint); err != nil {
+				if err := g.screenApp.Start(width-1, height-1, g.data.runtimeChan, &score, &foodPoint, direction); err != nil {
 					panic(err.Error())
 				}
 			}

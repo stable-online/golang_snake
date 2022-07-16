@@ -27,6 +27,7 @@ type GameData struct {
 	keyboardChan chan int
 	quitChan     chan int
 	runtimeChan  chan bool
+	gameOver     bool
 }
 
 //GameService  game 服务
