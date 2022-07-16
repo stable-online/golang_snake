@@ -28,7 +28,6 @@ type snake struct {
 }
 
 var (
-	score     = 0
 	foodPoint scope
 )
 
@@ -77,13 +76,13 @@ func InitGames() GamesType {
 						panic(err.Error())
 					}
 				}
-				flush()
+				flush(&score)
 			}
 		}
 	}
 }
 
 //flush
-func flush() {
-	time.Sleep(time.Duration(100-(score/10)) * time.Millisecond)
+func flush(score *int) {
+	time.Sleep(time.Duration(100-(*score/10)) * time.Millisecond)
 }
