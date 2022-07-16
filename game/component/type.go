@@ -29,6 +29,7 @@ type GameData struct {
 	runtimeChan  chan bool
 	gameOver     bool
 	score        int
+	direction    int
 }
 
 //GameService  game 服务

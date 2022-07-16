@@ -10,12 +10,6 @@ func NewGameService() *GameService {
 
 func (g *GameService) Start() {
 
-	//keyboardChan channel
-	var (
-		foodPoint scope
-		direction = UP
-	)
-
 	//init box
 	if initErr := termbox.Init(); initErr != nil {
 		panic(initErr)
@@ -31,7 +25,7 @@ func (g *GameService) Start() {
 		select {
 		case operator := <-g.data.keyboardChan:
 			if operator != 0 {
-				direction = operator
+				g.data.direction = operator
 			}
 		case <-g.data.quitChan:
 			return
@@ -40,7 +34,7 @@ func (g *GameService) Start() {
 		default:
 			if !g.data.gameOver {
 				width, height := termbox.Size()
-				if err := g.screenApp.Start(width-1, height-1, g.data.runtimeChan, &g.data.score, &foodPoint, direction); err != nil {
+				if err := g.screenApp.Start(width-1, height-1, g.data.runtimeChan, &g.data.score, g.data.direction); err != nil {
 					panic(err.Error())
 				}
 			}
