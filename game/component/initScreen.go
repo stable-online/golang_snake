@@ -9,8 +9,8 @@ import (
 	"time"
 )
 
-//ScreenFunType 启动屏幕展示
-type ScreenFunType func(int, int, chan bool, *snake, *int, *scope, int) error
+//screenFunType 启动屏幕展示
+type screenFunType func(int, int, chan bool, *snake, *int, *scope, int) error
 
 //snakeFunType
 type snakeFunType func(int, int, *snake, int)
@@ -37,7 +37,7 @@ func genFood(width int, height int, foodPoint *scope) {
 }
 
 //screen
-func screen(initSnake snakeFunType, initFood foodFunType, move moveFunType) ScreenFunType {
+func screen(initSnake snakeFunType, initFood foodFunType, move moveFunType) screenFunType {
 	return func(width int, height int, runtimeChan chan bool, snakes *snake, score *int, foodPoint *scope, direction int) error {
 
 		//verify
@@ -197,6 +197,6 @@ func initSnake() snakeFunType {
 }
 
 //initScreen 初始化屏幕
-func initScreen() ScreenFunType {
+func initScreen() screenFunType {
 	return screen(initSnake(), initFood(), initMove())
 }

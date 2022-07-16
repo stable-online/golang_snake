@@ -22,8 +22,8 @@ type snake struct {
 	len       int
 }
 
-//GameData game 数据
-type GameData struct {
+//gameData game 数据
+type gameData struct {
 	keyboardChan chan int
 	quitChan     chan int
 	runtimeChan  chan bool

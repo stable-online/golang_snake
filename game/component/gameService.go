@@ -8,11 +8,11 @@ import (
 type GameService struct {
 	screenApp  *ScreenProvider
 	monitorApp *MonitorProvider
-	data       *GameData
+	data       *gameData
 }
 
 func NewGameService() *GameService {
-	return &GameService{screenApp: NewScreenApp(), monitorApp: NewMonitorApp(), data: newGameData()}
+	return &GameService{screenApp: newScreenApp(), monitorApp: NewMonitorApp(), data: newGameData()}
 }
 
 func (g *GameService) Start() {
@@ -40,7 +40,7 @@ func (g *GameService) Start() {
 		default:
 			if !g.data.gameOver {
 				width, height := termbox.Size()
-				if err := g.screenApp.Start(width-1, height-1, g.data); err != nil {
+				if err := g.screenApp.start(width-1, height-1, g.data); err != nil {
 					panic(err.Error())
 				}
 			}
