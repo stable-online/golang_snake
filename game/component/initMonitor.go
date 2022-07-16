@@ -8,7 +8,7 @@ type MonitorFunType func(chan int, chan int)
 
 //InitMonitor 初始化监控信息
 func InitMonitor() MonitorFunType {
-	return func(keyboard chan int, quit chan int) {
+	return func(monitorChan chan int, quit chan int) {
 
 		termbox.SetInputMode(termbox.InputEsc)
 
@@ -17,18 +17,18 @@ func InitMonitor() MonitorFunType {
 			case termbox.EventKey:
 				switch ev.Key {
 				case termbox.KeyArrowLeft:
-					keyboard <- LEFT
+					monitorChan <- LEFT
 				case termbox.KeyArrowDown:
-					keyboard <- DOWN
+					monitorChan <- DOWN
 				case termbox.KeyArrowRight:
-					keyboard <- RIGHT
+					monitorChan <- RIGHT
 				case termbox.KeyArrowUp:
-					keyboard <- UP
+					monitorChan <- UP
 				case termbox.KeyEsc:
 					quit <- QUIT
 				}
 			default:
-				keyboard <- 0
+				monitorChan <- 0
 			case termbox.EventError:
 				panic(ev.Err)
 			}
