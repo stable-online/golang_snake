@@ -58,6 +58,9 @@ func genFood(width int, height int) {
 func screen(initSnake snakeFunType, initFood foodFunType, move moveFunType) ScreenFunType {
 	return func(width int, height int, runtimeChan chan bool) {
 
+		//init
+		verifyHeight(height)
+
 		//init snakes
 		initSnake(width, height)
 
@@ -186,6 +189,13 @@ func generateRandInt(min, max int) int {
 	return rand.Intn(max-min) + min
 }
 
+//verifyHeight 验证高度
+func verifyHeight(height int) {
+	if height < 19 {
+		panic("The size is too small, please enlarge the border (边框高度太小,请拉大边框高度)")
+	}
+}
+
 //initSnake snake
 func initSnake() snakeFunType {
 	return func(width int, height int) {
@@ -204,3 +214,4 @@ func initSnake() snakeFunType {
 func InitScreen() ScreenFunType {
 	return screen(initSnake(), initFood(), initMove())
 }
+
