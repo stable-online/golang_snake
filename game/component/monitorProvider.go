@@ -1,13 +1,13 @@
 package component
 
-type MonitorProvider struct {
+type monitorProvider struct {
 	Monitor monitorFunType
 }
 
-func NewMonitorApp() *MonitorProvider {
-	return &MonitorProvider{Monitor: initMonitor()}
+func NewMonitorApp() *monitorProvider {
+	return &monitorProvider{Monitor: initMonitor()}
 }
 
-func (s *MonitorProvider) Start(GameData *gameData) {
+func (s *monitorProvider) Start(GameData *gameData) {
 	s.Monitor(GameData.keyboardChan, GameData.quitChan)
 }

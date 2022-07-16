@@ -7,7 +7,7 @@ import (
 //GameService  game 服务
 type GameService struct {
 	screenApp  *ScreenProvider
-	monitorApp *MonitorProvider
+	monitorApp *monitorProvider
 	data       *gameData
 }
 
