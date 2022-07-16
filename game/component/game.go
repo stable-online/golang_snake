@@ -53,15 +53,18 @@ func InitGames() GamesType {
 			default:
 				if !gameOver {
 					width, height := termbox.Size()
-					screen(width-1, height-1, runtimeChan)
+					//check
+					if err := screen(width-1, height-1, runtimeChan); err != nil {
+						panic(err.Error())
+					}
 				}
-				flushScreen()
+				flush()
 			}
 		}
 	}
 }
 
-//flushScreen
-func flushScreen() {
+//flush
+func flush() {
 	time.Sleep(time.Duration(100-(score/10)) * time.Millisecond)
 }

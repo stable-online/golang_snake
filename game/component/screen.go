@@ -1,6 +1,7 @@
 package component
 
 import (
+	"errors"
 	"github.com/mattn/go-runewidth"
 	"github.com/nsf/termbox-go"
 	"math/rand"
@@ -9,7 +10,7 @@ import (
 )
 
 //ScreenFunType 启动屏幕展示
-type ScreenFunType func(int, int, chan bool)
+type ScreenFunType func(int, int, chan bool) error
 
 //snakeFunType
 type snakeFunType func(int, int)
@@ -56,7 +57,7 @@ func genFood(width int, height int) {
 
 //screen
 func screen(initSnake snakeFunType, initFood foodFunType, move moveFunType) ScreenFunType {
-	return func(width int, height int, runtimeChan chan bool) {
+	return func(width int, height int, runtimeChan chan bool) error {
 
 		//init
 		verifyHeight(height)
@@ -70,13 +71,16 @@ func screen(initSnake snakeFunType, initFood foodFunType, move moveFunType) Scre
 		//init move
 		move(width, height, runtimeChan)
 
-		render(width, height)
+		return render(width, height)
 	}
 }
 
 //render
-func render(width int, height int) {
-	termbox.Clear(termbox.ColorDefault, termbox.ColorBlack)
+func render(width int, height int) error {
+
+	if err := termbox.Clear(termbox.ColorDefault, termbox.ColorBlack); err != nil {
+		return errors.New(err.Error())
+	}
 
 	//middle number
 	var midWidth = width/2 - 8
@@ -126,7 +130,8 @@ func render(width int, height int) {
 
 	//setting food
 	termbox.SetCell(foodPoint.x, foodPoint.y, '@', termbox.ColorLightRed, termbox.ColorDefault)
-	termbox.Flush()
+
+	return termbox.Flush()
 }
 
 // initMove InitMonitor for user keyboard
@@ -214,4 +219,3 @@ func initSnake() snakeFunType {
 func InitScreen() ScreenFunType {
 	return screen(initSnake(), initFood(), initMove())
 }
-
