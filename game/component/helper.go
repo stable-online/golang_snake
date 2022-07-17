@@ -1,9 +1,7 @@
 package component
 
 import (
-	"bytes"
 	"fmt"
-	"runtime"
 	"time"
 )
 
@@ -15,16 +13,16 @@ func Catch() {
 		fmt.Println(fmt.Sprintf("Catch faild:%s", err))
 
 		//获取堆栈信息(暂时先不获取吧.)
-		buf := new(bytes.Buffer)
-		fmt.Fprintf(buf, "%v\n", err)
-		for i := 1; ; i++ {
-			pc, file, line, ok := runtime.Caller(i)
-			if !ok {
-				break
-			}
-			fmt.Fprintf(buf, "%s:%d (0x%x)\n", file, line, pc)
-		}
-		fmt.Println(buf.String())
+		/*		buf := new(bytes.Buffer)
+				fmt.Fprintf(buf, "%v\n", err)
+				for i := 1; ; i++ {
+					pc, file, line, ok := runtime.Caller(i)
+					if !ok {
+						break
+					}
+					fmt.Fprintf(buf, "%s:%d (0x%x)\n", file, line, pc)
+				}
+				fmt.Println(buf.String())*/
 	}
 }
 

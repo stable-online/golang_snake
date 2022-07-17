@@ -25,7 +25,7 @@ func (g *GameService) Start() {
 	defer termbox.Close()
 
 	//monitor keyboardChan
-	go g.monitorApp.Start(g.data)
+	go g.monitorApp.start(g.data)
 
 	//run job
 	g.working()
