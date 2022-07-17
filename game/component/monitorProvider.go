@@ -4,7 +4,7 @@ type monitorProvider struct {
 	Monitor monitorFunType
 }
 
-func NewMonitorApp() *monitorProvider {
+func newMonitorApp() *monitorProvider {
 	return &monitorProvider{Monitor: initMonitor()}
 }
 
