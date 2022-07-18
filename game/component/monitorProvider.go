@@ -1,5 +1,14 @@
 package component
 
+//main
+const (
+	RIGHT = 1 + iota
+	LEFT
+	UP
+	DOWN
+	QUIT
+)
+
 type monitorProvider struct {
 	Monitor monitorFunType
 }

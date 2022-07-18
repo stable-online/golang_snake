@@ -4,18 +4,18 @@ import (
 	"github.com/nsf/termbox-go"
 )
 
-//GameService  game 服务
-type GameService struct {
+//gameService  game 服务
+type gameService struct {
 	screenApp  *ScreenProvider
 	monitorApp *monitorProvider
 	data       *gameData
 }
 
-func NewGameService() *GameService {
-	return &GameService{screenApp: newScreenApp(), monitorApp: newMonitorApp(), data: newGameData()}
+func NewGameService() *gameService {
+	return &gameService{screenApp: newScreenApp(), monitorApp: newMonitorApp(), data: newGameData()}
 }
 
-func (g *GameService) Start() {
+func (g *gameService) Start() {
 
 	if initErr := termbox.Init(); initErr != nil {
 		panic(initErr)
@@ -31,7 +31,7 @@ func (g *GameService) Start() {
 	g.working()
 }
 
-func (g *GameService) working() {
+func (g *gameService) working() {
 	for {
 		select {
 		case operator := <-g.data.keyboardChan:
@@ -49,11 +49,11 @@ func (g *GameService) working() {
 					panic(err.Error())
 				}
 			}
-			g.flush(&g.data.score)
+			g.flush(g.data.score)
 		}
 	}
 }
 
-func (g *GameService) flush(score *int) {
-	Flush(*score)
+func (g *gameService) flush(score int) {
+	Flush(score)
 }

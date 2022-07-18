@@ -27,8 +27,6 @@ func initMonitor() monitorFunType {
 				case termbox.KeyEsc:
 					quit <- QUIT
 				}
-			default:
-				monitorChan <- 0
 			case termbox.EventError:
 				panic(ev.Err)
 			}
