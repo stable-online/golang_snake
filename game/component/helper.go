@@ -32,7 +32,7 @@ func Run(f func()) {
 	f()
 }
 
-//Flush 刷新
-func Flush(score int) {
+//flush 刷新
+func flush(score int) {
 	time.Sleep(time.Duration(150-(score/10)) * time.Millisecond)
 }

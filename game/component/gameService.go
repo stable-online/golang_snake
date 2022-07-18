@@ -6,16 +6,17 @@ import (
 
 //gameService  game 服务
 type gameService struct {
-	screenApp  *ScreenProvider
+	screenApp  *screenProvider
 	monitorApp *monitorProvider
-	data       *gameData
 }
 
+//NewGameService 实例化游戏服务
 func NewGameService() *gameService {
-	return &gameService{screenApp: newScreenApp(), monitorApp: newMonitorApp(), data: newGameData()}
+	return &gameService{screenApp: newScreenApp(), monitorApp: newMonitorApp()}
 }
 
-func (g *gameService) Start() {
+//Start 开始游戏
+func (g *gameService) Start(data *gameData) {
 
 	if initErr := termbox.Init(); initErr != nil {
 		panic(initErr)
@@ -25,35 +26,30 @@ func (g *gameService) Start() {
 	defer termbox.Close()
 
 	//monitor keyboardChan
-	go g.monitorApp.start(g.data)
+	go g.monitorApp.start(data)
 
 	//run job
-	g.working()
+	g.run(data)
 }
 
-func (g *gameService) working() {
+//run 进行
+func (g *gameService) run(data *gameData) {
 	for {
 		select {
-		case operator := <-g.data.keyboardChan:
-			if operator != 0 {
-				g.data.direction = operator
-			}
-		case <-g.data.quitChan:
+		case operator := <-data.keyboardChan:
+			data.direction = operator
+		case <-data.quitChan:
 			return
-		case msg := <-g.data.runtimeChan:
-			g.data.gameOver = msg
+		case msg := <-data.runtimeChan:
+			data.gameOver = msg
 		default:
-			if !g.data.gameOver {
+			if !data.gameOver {
 				width, height := termbox.Size()
-				if err := g.screenApp.start(width-1, height-1, g.data); err != nil {
+				if err := g.screenApp.start(width-1, height-1, data); err != nil {
 					panic(err.Error())
 				}
 			}
-			g.flush(g.data.score)
+			flush(data.score)
 		}
 	}
-}
-
-func (g *gameService) flush(score int) {
-	Flush(score)
 }

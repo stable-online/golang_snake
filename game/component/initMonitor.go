@@ -4,6 +4,16 @@ import (
 	"github.com/nsf/termbox-go"
 )
 
+//main
+const (
+	RIGHT = 1 + iota
+	LEFT
+	UP
+	DOWN
+	QUIT
+)
+
+//monitorFunType
 type monitorFunType func(chan int, chan int)
 
 //initMonitor 初始化监控

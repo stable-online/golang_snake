@@ -4,5 +4,5 @@ import . "snake/game/component"
 
 //Start starting snake program
 func Start() {
-	Run(func() { NewGameService().Start() })
+	Run(func() { NewGameService().Start(NewGameData()) })
 }
