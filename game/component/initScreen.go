@@ -10,10 +10,10 @@ import (
 )
 
 //screenFunType 启动屏幕展示
-type screenFunType func(int, int, chan bool, *snake, *int, *scope, int) error
+type screenFunType func(*game) error
 
 //snakeFunType
-type snakeFunType func(int, int, *snake, int)
+type snakeFunType func(*game)
 
 //foodFunType
 type foodFunType func(int, int, *scope)
@@ -36,24 +36,41 @@ func genFood(width int, height int, foodPoint *scope) {
 	foodPoint.y = generateRandInt(4, height-1)
 }
 
-//screen
-func screen(initSnake snakeFunType, initFood foodFunType, move moveFunType) screenFunType {
-	return func(width int, height int, runtimeChan chan bool, snakes *snake, score *int, foodPoint *scope, direction int) error {
+//handle
+func handle(initSnake snakeFunType, initFood foodFunType, move moveFunType) screenFunType {
+	return func(game *game) error {
 
-		//verify
-		verifyHeight(height)
+		//游戏屏幕数据
+		screen := game.getScreen()
 
-		//init snakes
-		initSnake(width, height, snakes, direction)
+		//动态设置表格(游戏中, 边框变动会进行动态调整)
+		setBorder(screen)
 
-		//init initFood
-		initFood(width, height, foodPoint)
+		//验证屏幕高度
+		verifyHeight(screen.getHeight())
 
-		//init move
-		move(width, height, runtimeChan, snakes, score, foodPoint)
+		//初始化蛇
+		initSnake(game)
 
-		return render(width, height, snakes, score, foodPoint)
+		//初始化食物
+		initFood(screen.getWidth(), screen.getHeight(), screen.getFoodPoint())
+
+		//初始化移动
+		move(screen.getWidth(), screen.getHeight(), game.getControl().getPlayGameStatusChan(), screen.getSnakes(), screen.getScore(), screen.getFoodPoint())
+
+		//拿到数据后,进行渲染界面
+		return render(screen.getWidth(), screen.getHeight(), screen.getSnakes(), screen.getScore(), screen.getFoodPoint())
 	}
+}
+
+//设置边框
+func setBorder(screen *screen) {
+	size, height := termbox.Size()
+
+	//设置边框的宽
+	screen.setWidth(size - 1)
+	//设置边框的高
+	screen.setHeight(height - 1)
 }
 
 //render
@@ -184,19 +201,31 @@ func verifyHeight(height int) {
 
 //initSnake snake
 func initSnake() snakeFunType {
-	return func(width int, height int, snakes *snake, direction int) {
+	return func(gameData *game) {
 
-		if len(snakes.snakeBody) == 0 {
-			snakes.snakeBody = append(snakes.snakeBody, scope{5, height - 2})
-			snakes.snakeBody = append(snakes.snakeBody, scope{5, height - 3})
+		//屏幕信息
+		g := gameData.getScreen()
 
-			snakes.len = 2
+		//蛇的信息
+		s := g.getSnakes()
+
+		//如果蛇不存在, 需要初始化
+		if len(s.getSnakeBody()) == 0 {
+
+			//进行初始化body
+			s.setSnakeBody(append(s.getSnakeBody(), scope{5, g.getHeight() - 2}))
+			s.setSnakeBody(append(s.getSnakeBody(), scope{5, g.getHeight() - 3}))
+
+			//初始化蛇的长度
+			s.setLen(2)
 		}
-		snakes.direction = direction
+
+		//设置蛇跑的方向
+		s.setDirection(gameData.getControl().getDirection())
 	}
 }
 
-//initScreen 初始化屏幕
-func initScreen() screenFunType {
-	return screen(initSnake(), initFood(), initMove())
+//initScreenHandle 初始化屏幕
+func initScreenHandle() screenFunType {
+	return handle(initSnake(), initFood(), initMove())
 }

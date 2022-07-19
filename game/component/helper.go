@@ -16,7 +16,7 @@ func Catch() {
 		/*		buf := new(bytes.Buffer)
 				fmt.Fprintf(buf, "%v\n", err)
 				for i := 1; ; i++ {
-					pc, file, line, ok := runtime.Caller(i)
+					pc, file, line, ok := getControl.Caller(i)
 					if !ok {
 						break
 					}

@@ -1,6 +1,8 @@
 package main
 
-import "snake/game"
+import (
+	"snake/game"
+)
 
 func main() {
 	game.Start()

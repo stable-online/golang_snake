@@ -1,14 +1,16 @@
 package component
 
-type screenProvider struct {
-	Screen     screenFunType
-	screenData *screenData
+//screenApp 屏幕应用
+type screenApp struct {
+	Screen screenFunType
 }
 
-func newScreenApp() *screenProvider {
-	return &screenProvider{Screen: initScreen(), screenData: newScreenData()}
+//newScreenApp 屏幕实例化
+func newScreenApp() *screenApp {
+	return &screenApp{Screen: initScreenHandle()}
 }
 
-func (s *screenProvider) start(width int, height int, gameData *gameData) error {
-	return s.Screen(width, height, gameData.runtimeChan, s.screenData.snakes, &gameData.score, s.screenData.foodPoint, gameData.direction)
+//start 启动屏幕渲染
+func (s *screenApp) start(gameData *game) error {
+	return s.Screen(gameData)
 }
