@@ -1,5 +1,7 @@
 package component
 
+import "github.com/nsf/termbox-go"
+
 //scope
 type scope struct {
 	x int
@@ -76,6 +78,19 @@ func (s *screen) setWidth(width int) {
 //setHeight 设置边框的高度
 func (s *screen) setHeight(height int) {
 	s.height = height
+}
+
+//initScreen 实时获取盒子尺寸
+func (s *screen) initScreen() {
+
+	//获取盒子尺寸
+	size, height := termbox.Size()
+
+	//设置边框的宽
+	s.setWidth(size - 1)
+
+	//设置边框的高
+	s.setHeight(height - 1)
 }
 
 //getSnakes 获取蛇

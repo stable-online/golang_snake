@@ -44,7 +44,7 @@ func handle(initSnake snakeFunType, initFood foodFunType, move moveFunType) scre
 		screen := game.getScreen()
 
 		//动态设置表格(游戏中, 边框变动会进行动态调整)
-		setBorder(screen)
+		screen.initScreen()
 
 		//验证屏幕高度
 		verifyHeight(screen.getHeight())
@@ -61,16 +61,6 @@ func handle(initSnake snakeFunType, initFood foodFunType, move moveFunType) scre
 		//拿到数据后,进行渲染界面
 		return render(screen.getWidth(), screen.getHeight(), screen.getSnakes(), screen.getScore(), screen.getFoodPoint())
 	}
-}
-
-//设置边框
-func setBorder(screen *screen) {
-	size, height := termbox.Size()
-
-	//设置边框的宽
-	screen.setWidth(size - 1)
-	//设置边框的高
-	screen.setHeight(height - 1)
 }
 
 //render
