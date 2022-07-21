@@ -80,8 +80,8 @@ func (s *screen) setHeight(height int) {
 	s.height = height
 }
 
-//initScreen 实时获取盒子尺寸
-func (s *screen) initScreen() {
+//initScreenSize 实时获取盒子尺寸
+func (s *screen) initScreenSize() {
 
 	//获取盒子尺寸
 	size, height := termbox.Size()
@@ -118,16 +118,16 @@ func (s screen) getHeight() int {
 
 //control 控制
 type control struct {
-	moveChannel           chan int
-	quitChannel           chan int
-	playGameStatusChannel chan bool
-	gameOver              bool
-	direction             int
+	moveChannel        chan int
+	quitChannel        chan int
+	snakeStatusChannel chan bool
+	gameOver           bool
+	direction          int
 }
 
 //newControl 实例化控制器
 func newControl() *control {
-	return &control{moveChannel: make(chan int), quitChannel: make(chan int), playGameStatusChannel: make(chan bool, 1), gameOver: false, direction: UP}
+	return &control{moveChannel: make(chan int), quitChannel: make(chan int), snakeStatusChannel: make(chan bool, 1), gameOver: false, direction: UP}
 }
 
 //setGameOver 设置蛇已死亡
@@ -150,9 +150,9 @@ func (r *control) getQuitChan() chan int {
 	return r.quitChannel
 }
 
-//getPlayGameStatusChan 游戏状态管道
-func (r *control) getPlayGameStatusChan() chan bool {
-	return r.playGameStatusChannel
+//getSnakeStatusChan 游戏状态管道
+func (r *control) getSnakeStatusChan() chan bool {
+	return r.snakeStatusChannel
 }
 
 //getActivity 如果蛇还在活跃中

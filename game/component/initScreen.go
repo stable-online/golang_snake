@@ -44,7 +44,7 @@ func handle(initSnake snakeFunType, initFood foodFunType, move moveFunType) scre
 		screen := game.getScreen()
 
 		//动态设置表格(游戏中, 边框变动会进行动态调整)
-		screen.initScreen()
+		screen.initScreenSize()
 
 		//验证屏幕高度
 		verifyHeight(screen.getHeight())
@@ -56,7 +56,7 @@ func handle(initSnake snakeFunType, initFood foodFunType, move moveFunType) scre
 		initFood(screen.getWidth(), screen.getHeight(), screen.getFoodPoint())
 
 		//初始化移动
-		move(screen.getWidth(), screen.getHeight(), game.getControl().getPlayGameStatusChan(), screen.getSnakes(), screen.getScore(), screen.getFoodPoint())
+		move(screen.getWidth(), screen.getHeight(), game.getControl().getSnakeStatusChan(), screen.getSnakes(), screen.getScore(), screen.getFoodPoint())
 
 		//拿到数据后,进行渲染界面
 		return render(screen.getWidth(), screen.getHeight(), screen.getSnakes(), screen.getScore(), screen.getFoodPoint())

@@ -50,7 +50,7 @@ func (g *gameService) run(game *game) {
 			return
 
 		//游戏角色状态
-		case status := <-game.getControl().getPlayGameStatusChan():
+		case status := <-game.getControl().getSnakeStatusChan():
 			//设置人物状态
 			game.getControl().setGameOver(status)
 
