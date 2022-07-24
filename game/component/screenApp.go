@@ -5,7 +5,7 @@ type screenApp struct {
 	Screen screenFunType
 }
 
-//newScreenApp 屏幕实例化
+//newScreenApp 初始化屏幕应用
 func newScreenApp() *screenApp {
 	return &screenApp{Screen: initScreenHandle()}
 }
