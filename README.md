@@ -13,9 +13,3 @@ Golang version snake game ^_^
 
 ## Run
 `go run main.go`  
-
-Or  
-
-`1. go build -o compiler/snake main.go`
-
-`2. ./compiler/snake`
