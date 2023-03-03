@@ -4,68 +4,78 @@ import (
 	"github.com/nsf/termbox-go"
 )
 
-//gameService 定义游戏行为
+// Game 游戏服务接口
+//
+// @Description:
+type Game interface {
+	Start()
+}
+
+//gameService 定义游戏实体
 type gameService struct {
-	screenApp  *screenApp
-	monitorApp *monitorApp
+	//
+	//  screenApp
+	//  @Description: 屏幕
+	//
+	screenApp Screen
+
+	//
+	//  monitorApp
+	//  @Description: 控制
+	//
+	monitorApp Monitor
 }
 
 //NewGameService 实例化游戏服务
-func NewGameService() *gameService {
+func NewGameService() Game {
 	return &gameService{screenApp: newScreenApp(), monitorApp: newMonitorApp()}
 }
 
 //Start 开始游戏
-func (g *gameService) Start(game *game) {
-
-	//启动包
+func (g *gameService) Start() {
+	//初始化插件
 	if initErr := termbox.Init(); initErr != nil {
 		panic(initErr)
 	}
 
-	//函数退出时, 关闭包
+	//函数退出时, 关闭包 rules
 	defer termbox.Close()
 
-	//加入协程空间, 异步监听用户点击事件
-	go g.monitorApp.handle(game)
-
 	//游戏启动
-	g.run(game)
+	g.run(g.monitorApp.start())
 }
 
 //run 游戏启动
-func (g *gameService) run(game *game) {
-
+func (g *gameService) run(m *monitorApp) {
+	//退出户标识
+CloseGame:
 	for {
 		select {
 
 		//键盘移动事件
-		case operator := <-game.getControl().getMoveChan():
-			//给游戏控制设置方向
-			game.getControl().setDirection(operator)
+		case operator := <-m.move:
+			g.screenApp.setDirection(operator)
 
 		//点击ECS事件
-		case <-game.getControl().getQuitChan():
+		case <-m.quit:
 			//退出刷新
-			return
+			break CloseGame
 
 		//游戏角色状态
-		case status := <-game.getControl().getSnakeStatusChan():
+		case status := <-g.screenApp.getSnakeStatusChan():
 			//设置人物状态
-			game.getControl().setGameOver(status)
+			g.screenApp.setGameOver(status)
 
 		default:
-
 			//如果蛇还没死
-			if game.getControl().getActivity() {
+			if g.screenApp.getActivity() {
 				//进行渲染界面
-				if err := g.screenApp.start(game); err != nil {
+				if err := g.screenApp.start(); err != nil {
 					panic(err.Error())
 				}
 			}
 
-			//刷新帧
-			flush(*game.getScreen().getScore())
+			g.screenApp.flush()
 		}
 	}
 }

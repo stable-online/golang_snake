@@ -1,8 +1,27 @@
 package game
 
-import . "snake/game/component"
+import (
+	"fmt"
+	"snake/game/component"
+)
 
-//Start starting snake program
+// Start starting snake program
+//
+// @Description:
 func Start() {
-	Run(func() { NewGameService().Start(NewGameData()) })
+
+	//捕获异常
+	defer recoverFailed()
+
+	//运行游戏
+	component.NewGameService().Start()
+}
+
+// recoverFailed
+//
+// @Description:
+func recoverFailed() {
+	if pM := recover(); pM != nil {
+		fmt.Println(pM)
+	}
 }

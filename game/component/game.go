@@ -118,8 +118,6 @@ func (s screen) getHeight() int {
 
 //control 控制
 type control struct {
-	moveChannel        chan int
-	quitChannel        chan int
 	snakeStatusChannel chan bool
 	gameOver           bool
 	direction          int
@@ -127,7 +125,7 @@ type control struct {
 
 //newControl 实例化控制器
 func newControl() *control {
-	return &control{moveChannel: make(chan int), quitChannel: make(chan int), snakeStatusChannel: make(chan bool, 1), gameOver: false, direction: UP}
+	return &control{snakeStatusChannel: make(chan bool, 1), gameOver: false, direction: UP}
 }
 
 //setGameOver 设置蛇已死亡
@@ -138,16 +136,6 @@ func (r *control) setGameOver(gameOver bool) {
 //setDirection 设置玩家方向指令
 func (r *control) setDirection(direction int) {
 	r.direction = direction
-}
-
-//getMoveChan 键盘监听--蛇移动管道
-func (r *control) getMoveChan() chan int {
-	return r.moveChannel
-}
-
-//getQuitChan 键盘监听--退出管道
-func (r *control) getQuitChan() chan int {
-	return r.quitChannel
 }
 
 //getSnakeStatusChan 游戏状态管道
@@ -185,7 +173,7 @@ func (g *game) getScreen() *screen {
 	return g.screen
 }
 
-//NewGameData 实例化
-func NewGameData() *game {
+//newGameData 实例化
+func newGameData() *game {
 	return &game{control: newControl(), screen: newScreen()}
 }
