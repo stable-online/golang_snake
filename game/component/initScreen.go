@@ -46,9 +46,6 @@ func handle(initSnake snakeFunType, initFood foodFunType, move moveFunType) scre
 		//动态设置表格(游戏中, 边框变动会进行动态调整)
 		screen.initScreenSize()
 
-		//验证屏幕高度
-		verifyHeight(screen.getHeight())
-
 		//初始化蛇
 		initSnake(game)
 
@@ -179,14 +176,13 @@ func head(snakes *snake) scope {
 //generateRandInt
 func generateRandInt(min, max int) int {
 	rand.Seed(time.Now().Unix())
-	return rand.Intn(max-min) + min
-}
 
-//verifyHeight 验证高度
-func verifyHeight(height int) {
-	if height < 19 {
-		panic("The size is too small, please enlarge the border (边框高度太小,请拉大边框高度)")
+	n := max - min
+	if n > 0 {
+		return rand.Intn(n) + min
 	}
+
+	return 1
 }
 
 //initSnake snake

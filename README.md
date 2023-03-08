@@ -13,3 +13,8 @@ Golang version snake game ^_^
 
 ## Run
 `go run main.go`  
+
+## Docker run
+`step 1 : ./build.sh`  
+
+`step 2 : docker run -ti --rm snake:v1`
